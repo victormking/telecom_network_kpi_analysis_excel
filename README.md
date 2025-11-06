@@ -244,3 +244,36 @@ This analysis delivered a complete 30-day performance and data-quality review ac
 📈 **Bottom Line:**  
 Network uptime ≈ 99.8 %, revenue risk < 1 %, and data-driven workflow enables faster, smarter decisions for service assurance and financial accountability.
 
+---
+
+## 🧰 Technology Stack  
+
+| **Category** | **Tools & Purpose** |
+|:--|:--|
+| **Environment** | Microsoft Excel (Power Query + PivotTables) |
+| **Data Modeling** | Relational schema via linked tables (6) |
+| **ETL Logic** | Power Query transforms (joins, flags, lookups) |
+| **Computation** | Excel formulas (`IF`, `XLOOKUP`, `SUMIFS`, `DATEDIF`) |
+| **Visualization** | PivotCharts and slicers (7 dashboards) |
+| **OS & Hardware** | Windows 11 Pro | i7 | 32 GB RAM |
+| **Version Control** | Git + GitHub (repo sync, README automation) |
+
+💡 *Goal:* show how Excel can still power a scalable, auditable KPI workflow when modern BI migration isn’t feasible.  
+
+---
+
+## 🗂️ Folder Structure  
+
+```plaintext
+telecom_network_kpi_analysis_excel/
+├── data/                  # 5 input CSVs + SLA commit lookup
+├── reports/               # Excel workbook (21 worksheets)
+│   └── Segra_Telecom_KPI_Analysis_FINAL.xlsx
+├── viz/                   # Exported dashboard PNGs (7)
+├── docs/                  # Insights, schema, and supporting notes
+│   ├── business_insights.md
+│   └── schema.md
+├── README.md              # You are here
+└── LICENSE
+
+
