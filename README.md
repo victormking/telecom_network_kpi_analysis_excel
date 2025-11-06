@@ -150,4 +150,38 @@ The workflow mirrors a mini ETL pipeline inside Excel — from raw CSVs to insig
 
 **Pipeline Summary:**  
 `buildings + circuits + carriers + ocularip_kpis + tts_tickets → Power Query joins → credit calculation → pivot dashboards → executive insights`
+---
+## 🧱 Data Schema (5 Primary CSVs)  
 
+These are the core datasets feeding the workbook. Each file represents a critical component of network, performance, or SLA reporting.  
+
+| **File** | **Purpose** | **Key Columns** |
+|:--|:--|:--|
+| **buildings.csv** | Master list of ON_NET / NEAR_NET sites with market and location data. | `building_id`, `state`, `market`, `net_status`, `last_verified`, `fiber_distance_m` |
+| **circuits.csv** | Inventory of active and inactive circuits linked to buildings and carriers. | `circuit_id`, `building_id`, `carrier_id`, `service_type`, `bandwidth_mbps`, `mrc_usd`, `install_date`, `is_active` |
+| **carriers.csv** | Reference table for carrier metadata and HQ info. | `carrier_id`, `carrier_name`, `hq_city`, `hq_state`, `active_flag` |
+| **ocularip_kpis.csv** | Daily network performance metrics (30 days rolling). | `date`, `circuit_id`, `uptime_pct`, `latency_ms`, `jitter_ms`, `packet_loss_pct` |
+| **tts_tickets.csv** | Trouble-ticket and SLA tracking data with resolution times. | `ticket_id`, `circuit_id`, `opened_date`, `closed_date`, `status`, `category`, `sla_met_flag`, `priority` |
+
+🧮 **Helper Lookup:** `tbl_commits` — defines latency/jitter/loss thresholds and credit rates per service type.  
+📘 Full column dictionary available in [`/docs/schema.md`](docs/schema.md).  
+
+---
+
+## 📗 Workbook Structure (21 Sheets Total)  
+
+The Excel file functions as a self-contained ETL pipeline: each phase has dedicated sheets for input, transform, and visualization.  
+
+| **Category** | **Worksheet Name(s)** | **Purpose** |
+|:--|:--|:--|
+| **0 – Raw Data (Inputs)** | `buildings`, `circuits`, `carriers`, `ocularip_kpis`, `tts_tickets`, `tbl_commits` | Imported CSVs with Power Query connections. |
+| **1 – Transform & Audit** | `checks`, `tbl_sla`, `tbl_sla_facts_final`, `tbl_credit_day`, `tbl_ticket_summary` | Data quality checks + SLA logic joins + credit calcs. |
+| **2 – Pivots / Aggregations** | `pvt_services`, `pvt_coverage`, `pvt_kpi_perf_30d`, `pvt_credit`, `pvt_tts` | Consolidated pivot tables feeding dashboards. |
+| **3 – Executive Visuals** | `viz_exec`, `viz_credits`, `viz_kpi_30d`, `viz_tickets`, `viz_trends` | 7 presentation-ready dashboards for leadership. |
+| **4 – Docs / Exports** | `readme_note`, `export_png_controls` | Notes, QA logs, and image export controls. |
+
+🔁 **Workflow Flow:**  
+`/data (raw CSVs)` → Power Query load → Transform & Audit sheets → Pivot tables → `viz_*` dashboards → Exports in `/viz/`.  
+
+💡 Each long sheet uses **Freeze Panes** (top 3 rows) and **named ranges** for stable refresh and chart linking.  
+---
