@@ -165,7 +165,6 @@ These are the core datasets feeding the workbook. Each file represents a critica
 | **tts_tickets.csv** | Trouble-ticket and SLA tracking data with resolution times. | `ticket_id`, `circuit_id`, `opened_date`, `closed_date`, `status`, `category`, `sla_met_flag`, `priority` |
 
 🧮 **Helper Lookup:** `tbl_commits` — defines latency/jitter/loss thresholds and credit rates per service type.  
-📘 Full column dictionary available in [`/docs/schema.md`](docs/schema.md).  
 
 ---
 
