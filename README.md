@@ -35,6 +35,12 @@ This Excel-first project simulates a **Network Data Analyst II** workflow in the
 💡 All long sheets have **freeze panes** and named ranges for consistent refresh.
 
 ---
+<p align="center">
+  <img src="https://img.shields.io/badge/Microsoft_Excel-217346?style=for-the-badge&logo=microsoftexcel&logoColor=white" />
+  <img src="https://img.shields.io/badge/Power_Query-00B294?style=for-the-badge&logo=powerbi&logoColor=white" />
+  <img src="https://img.shields.io/badge/Power_Pivot-F2C811?style=for-the-badge&logo=powerbi&logoColor=black" />
+  <img src="https://img.shields.io/badge/Windows_11-0078D6?style=for-the-badge&logo=windows11&logoColor=white" />
+</p>
 
 ## 🧭 Mini ERD (Schema Overview)
 
