@@ -112,6 +112,7 @@ erDiagram
     float  packet_loss_commit_pct
     float  credit_policy_usd_per_breach
   }
+```
 ## 🎯 Project Objectives & Context  
 
 This project recreates the **daily analytics workflow** of a **Network Data Analyst II** at a telecom company such as Segra — a role responsible for validating network coverage data, tracking SLA performance, and quantifying financial exposure from SLA breaches.  
