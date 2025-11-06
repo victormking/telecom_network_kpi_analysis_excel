@@ -1,135 +1,122 @@
-# Telecom Network Data Quality & SLA KPI Analysis (Excel)
+# 📶 Telecom Network KPI & Data Quality (Excel Project)
 
-**Goal.** Build a clean, repeatable Excel workflow (Power Query + PivotTables) to:
-- validate network data quality,
-- monitor SLA performance (uptime, latency, jitter, loss),
-- quantify **credit exposure** ($) by market/carrier,
-- track **tickets & resolution** to guide root-cause actions.
+**ON_NET / NEAR_NET accuracy • 30-Day Performance • SLA Credit Exposure • Financial Impact**
 
-**Why it matters (for a Network Data Analyst II):**
-- The team maintains a 500k+ on-net/near-net list that fuels growth.
-- Accuracy drives sales targeting; SLA reporting reduces cost of credits.
-- This workbook is a practical template: refresh data → refresh pivots → export KPIs.
+![Dashboard Preview](viz/exec_cover.png)
 
 ---
 
-## Data & Schema
+## 🧭 Overview
 
-**Files (5):** `buildings.csv`, `circuits.csv`, `carriers.csv`, `ocularip_kpis.csv`, `tts_tickets.csv`  
-**Helper:** `tbl_commits` (commit thresholds; DEFAULT row in this project)
+This Excel-first project simulates a **Network Data Analyst II** workflow in the telecom industry:
 
-`docs/schema.md` includes full column dictionary.
+- Maintain an accurate **ON_NET / NEAR_NET building list** to guide future sales opportunities.  
+- Monitor **30-day network performance** using OcularIP-style KPIs (*uptime %, latency ms, jitter ms, packet loss %*).  
+- Quantify **SLA breaches** → estimate **credit exposure** and rank impact by **MRC (USD)**.  
+- Build **repeatable Power Query + PivotTable** pipelines with **7 dashboards** for exec-ready insights.  
 
----
-
-## Process (Phases)
-
-0. **Setup** – Load 5 CSVs as tables via Power Query  
-1. **Data Quality** – `checks` sheet (duplicates, orphan keys, stale building verifications)  
-2. **Coverage & Inventory** – `pvt_services` for active circuits & MRC by carrier/service  
-3. **SLA Facts** – Merge KPIs → Circuits → Carriers → Commits → add `_fail` flags & `any_fail`  
-4. **Credit Exposure** – `credit_day = IF(any_fail, 0.05 * mrc_usd, 0)`  
-5. **Tickets/Root Cause** – Pivot tickets (volume, category, SLA-related, resolution hours)  
-6. **Executive Visuals** – 7 charts (below)  
-7. **Insights & Recommendations** – see PDF in `/reports/`
+📂 **Artifacts**
+- `/reports/telecom_network_kpi_analysis_v1.0.xlsx` → 21 worksheets  
+- `/viz/` → exported charts (coverage, KPI 30 d, credits, tickets)  
+- `/docs/` → insights + methods  
 
 ---
 
-## 15 Business Questions (selected answers)
+## ⚡ Quickstart
 
-1. Buildings needing re-verification (>365 days): **532** (see `checks`)  
-2. % ON_NET vs NEAR_NET by market: see pivot in `pvt_services`  
-5. Total active circuits & MRC by carrier: see `viz_1`  
-7. Markets with lowest uptime %: `pvt_kpi_perf_30d` / `tbl_sla_facts_final`  
-8. Carriers breaching latency commits most: `tbl_sla_facts_final`  
-9. Bottom 10 circuits by uptime (30d): `viz_4`  
-10–12. Estimated credits, credit by market, MoM trend: `viz_5`, `viz_7`  
-13. Most common ticket categories: `viz_6`  
-15. Total financial impact YTD: sum of `credit_day` in `tbl_sla_facts_final`
+1️⃣ Clone → open the workbook:  
 
-*(Full Q1–Q15 with details in the PDF.)*
+/reports/telecom_network_kpi_analysis_v1.0.xlsx
 
----
+2️⃣ In Excel  
+- Enable **Power Query** refresh if prompted.  
+- Use **slicers** on dashboards to filter by *market / carrier / service_type*.  
+- Begin with `viz_exec` (one-pager summary), then drill into `viz_credits`, `viz_kpi_30d`, and `viz_tickets`.  
 
-## Visuals
-
-1. **Active Circuits & MRC by Carrier**  
-   ![viz](viz/01_services_by_carrier.png)
-
-2. **Average Resolution Time (hours)**  
-   ![viz](viz/02_avg_resolution_hours.png)
-
-3. **Uptime % vs Latency Fail % by Carrier**  
-   ![viz](viz/03_uptime_vs_latency_by_carrier.png)
-
-4. **Bottom 10 Circuits by Avg Uptime (30d)**  
-   ![viz](viz/04_bottom10_uptime.png)
-
-5. **Estimated SLA Credits by Carrier (with MRC overlay)**  
-   ![viz](viz/05_credits_by_carrier_mrc_overlay.png)
-
-6. **Ticket Volume by Category**  
-   ![viz](viz/06_tickets_by_category.png)
-
-7. **Monthly Credit Trend (MoM)**  
-   ![viz](viz/07_credit_trend_mom.png)
+💡 All long sheets have freeze panes and named ranges for consistent refresh.
 
 ---
 
-## Key Insights (high level)
+## 🧱 Data Schema (5 Primary CSVs)
 
-- **Data Quality:** 532 buildings require re-verification; 0 orphan circuits/carriers.  
-- **Performance:** Overall uptime is strong, but latency breaches concentrate in a subset of carriers/markets.  
-- **Financial Exposure:** Estimated credits cluster by market; targeting those routes yields quick savings.  
-- **Operations:** Ticket categories align with SLA fail patterns; focusing on the top 2 categories reduces churn risk.
+| File | Purpose | Key Columns |
+|------|----------|-------------|
+| **buildings.csv** | ON_NET / NEAR_NET sites | building_id, state, market, net_status, last_verified 📅 |
+| **circuits.csv** | Service inventory | circuit_id, building_id, carrier_id, service_type, bandwidth_mbps, mrc_usd |
+| **carriers.csv** | Carrier lookup | carrier_id, carrier_name, hq_city, active_flag |
+| **ocularip_kpis.csv** | Performance metrics | date, circuit_id, uptime_pct, latency_ms, jitter_ms, packet_loss_pct |
+| **tts_tickets.csv** | Support tickets | ticket_id, circuit_id, opened_date, closed_date, category, sla_met_flag |
 
----
-
-## How to Refresh
-
-1. Replace the 5 CSVs in `/data`.  
-2. Open `reports/Segra_Telecom_KPI_Analysis_FINAL.xlsx`.  
-3. **Data → Refresh All**.  
-4. Charts update automatically; export PNGs from each `viz_*` sheet.
+📑 `table_commit` = SLA threshold by service (latency ≤ x ms etc.)
 
 ---
 
-## Next Steps
+## 📊 Workbook Structure (21 Sheets Total)
 
-- Expand `tbl_commits` by carrier/service for more granular targets.  
-- Add market dimension to circuits (extend merge with buildings).  
-- Publish a lightweight Power BI / Tableau companion for exec views.  
-- Add a “data quality score” KPI per building/market.
+**Raw Data (6)** → `buildings`, `circuits`, `carriers`, `ocularip_kpis`, `tts_tickets`, `table_commit`  
+**Checks (1)** → `checks` (state codes, orphans, last_verified > 365 d)  
+**Work Tabs (4)** → `pvt_coverage`, `pvt_services`, `pvt_kpi_perf`, `pvt_tts`  
+**SLA Facts (2)** → `tbl_sla`, `tbl_sla_facts_final` (breach flags + credits)  
+**Visuals (7)** → `viz_exec`, `viz_coverage`, `viz_services`, `viz_kpi_30d`, `viz_sla_heat`, `viz_credits`, `viz_tickets`
 
 ---
 
-## About Me
+## 🔍 15 Business Questions & Where They’re Answered
 
-Victor King — Denver, CO  
-M.S. in Sport Analytics (Syracuse, 2025)  
-- LinkedIn: https://linkedin.com/in/victormking  
-- GitHub: https://github.com/victormking
+| # | Question | Data Source | Method |
+|:-:|-----------|-------------|---------|
+| 1 | Buildings needing state verification > 365 days | `checks` | Count + flag list |
+| 2 | % ON_NET vs NEAR_NET by market | `pvt_coverage` | Pivot % |
+| 3 | Invalid state codes | `checks` | Validation (0 expected) |
+| 4 | Orphan circuits (no carrier/building) | `checks` | Validation (0 expected) |
+| 5 | Active circuits & MRC by carrier | `pvt_services` | Sum / avg |
+| 6 | Avg bandwidth per service type | `pvt_services` | Calc field |
+| 7 | Markets with lowest uptime (30 d) | `pvt_kpi_perf` | Pivot + rank |
+| 8 | Carriers breaching latency commits most | `tbl_sla_facts_final` | Breach rate |
+| 9 | Worst 10 circuits by uptime | `tbl_sla_facts_final` | Rank + owners |
+| 10 | Est. SLA credits this month | `pvt_credits` | Policy × breach count |
+| 11 | Markets driving most credits | `pvt_credits` | Contribution % |
+| 12 | MoM credit trend | `pvt_credits` | Pivot chart 📈 |
+| 13 | Most common ticket categories | `pvt_tts` | Top-N |
+| 14 | Do SLA fails align with tickets | SLA ↔ TTS | Cross-check |
+| 15 | YTD $ impact of SLA breaches | `tbl_sla_facts_final` | Sum credits |
+
+---
+
+## 💡 Key Insights
+
+- 🏢 **Coverage:** NEAR_NET density varies widely by market and correlates with higher latency/ticket volume.  
+- ⚙️ **Performance (30 d):** Most outages come from specific market × carrier pairs → targeted fixes yield big gains.  
+- 💵 **SLA & Credits:** ~10 % of circuits drive > 60 % of credit expense → focus remediation there.  
+- 📊 **Financial Impact:** High-MRC circuits with repeat breaches are priority #1 for ROI and customer retention.  
+
+👉 See [`/docs/business_insights.md`](docs/business_insights.md) for expanded analysis.
+
+---
+
+## 🗂️ Folder Map
+
+telecom_network_kpi_analysis_excel/
+├─ data/ # raw CSV inputs
+├─ reports/ # main Excel workbook
+├─ viz/ # exported dashboard images
+├─ docs/ # insights & methods
+│ ├─ business_insights.md
+│ └─ methods.md
+└─ README.md
 
 
-# Schema (short)
+---
 
-## buildings.csv
-- building_id (PK), street_addr, city, state, lat, lon, net_status [ON_NET|NEAR_NET], fiber_distance_m, market, last_verified (date)
+## 🤝 Who Uses What
 
-## circuits.csv
-- circuit_id (PK), building_id (FK), carrier_id (FK), service_type, bandwidth_mbps, is_active (0/1), install_date, mrc_usd (currency)
+| Team | Uses | Outcome |
+|------|------|----------|
+| Sales | ON_NET coverage map | Target new builds / quotes |
+| NOC / Ops | Breach alerts | Reduce credits & trouble tickets |
+| Finance | Credit trend + MRC context | Track cost savings |
+| Strategy | Build vs Optimize decisions | ROI-driven growth |
 
-## carriers.csv
-- carrier_id (PK), carrier_name, hq_city, hq_state, contact_email, active_flag (0/1)
+---
 
-## ocularip_kpis.csv
-- date, circuit_id (FK), uptime_pct, latency_ms, jitter_ms, packet_loss_pct
-
-## tts_tickets.csv
-- ticket_id, circuit_id (FK), opened_date, closed_date, status, category, priority, sla_met_flag (0/1)
-- downtime_minutes (derived/assumed if included)
-
-## commits (helper table in workbook)
-- key, uptime_commit_pct, latency_commit_ms, jitter_commit_ms, loss_commit_pct
-- DEFAULT row used in this project; can be extended by carrier/service
 
