@@ -212,3 +212,35 @@ Each question corresponds to a pivot, measure, or visualization inside the workb
 📘 *All Q01–Q15 detailed answers are documented in* [`/docs/business_insights.md`](docs/business_insights.md).
 
 ---
+
+## 💡 Results & Insights Summary  
+
+This analysis delivered a complete 30-day performance and data-quality review across five operational datasets — Buildings, Circuits, Carriers, KPIs, and Tickets — replicating a **Network Data Analyst II** workflow for telecom service assurance.
+
+### **Key Results**
+- ✅ **Data Quality:** 532 buildings (≈ 6 %) require re-verification (> 365 days); no orphan circuits/carriers after relational checks.  
+- 🌐 **Coverage & Inventory:** 72 % ON_NET vs 28 % NEAR_NET; Carrier A accounts for ≈ 42 % of circuits and $85 K MRC monthly.  
+- ⚙️ **SLA Performance:** Avg uptime 99.82 %; ~6 % of days flagged as fails (mainly latency breaches from Carriers A and C).  
+- 💵 **Credit Exposure:** Credits = 5 % of MRC on fail days → ≈ $18 K this month (≈ 0.8 % revenue risk); 70 % originating from Atlanta + Dallas.  
+- 🧰 **Tickets & Root Cause:** 900 tickets analyzed — 65 % Hardware/Fiber-cut; avg resolution 5.3 h (vs 6 h SLA); strong correlation between latency fails and hardware tickets.  
+
+### **Executive Highlights**
+- The network operates **within SLA standards** but shows moderate credit exposure in select markets.  
+- Data verification and latency management offer the **highest ROI** improvements.  
+- Excel ETL pipeline demonstrates scalable, audit-ready workflow for large operational datasets.  
+
+### **Recommendations**
+| **Focus Area** | **Action** | **Expected Impact** |
+|:--|:--|:--|
+| 🧮 Data Governance | Quarterly building verification audits | ↑ Data trust & audit readiness |
+| ⚡ Network Ops | Latency root-cause analysis for high-fail carriers | ↓ SLA breaches (~ 2 pp) |
+| 💰 Finance | Credit-tracking dashboard by carrier | ↓ Revenue risk 0.8 % → 0.5 % |
+| 🧑‍💻 Service Desk | Predictive ticket prioritization | ↓ Resolution time by 1 h |
+
+> 📘 **Full Report:** See [`/docs/business_insights.md`](./docs/business_insights.md) for expanded findings, recommendations, and visual commentary.
+
+---
+
+📈 **Bottom Line:**  
+Network uptime ≈ 99.8 %, revenue risk < 1 %, and data-driven workflow enables faster, smarter decisions for service assurance and financial accountability.
+
