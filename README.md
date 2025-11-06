@@ -36,6 +36,80 @@ This Excel-first project simulates a **Network Data Analyst II** workflow in the
 💡 All long sheets have freeze panes and named ranges for consistent refresh.
 
 ---
+# 🧭 Mini ERD (Schema Overview)
+
+This diagram shows how the five primary CSVs (plus an SLA commit lookup) relate in the workbook.
+
+```mermaid
+erDiagram
+    BUILDINGS ||--o{ CIRCUITS : hosts
+    CARRIERS  ||--o{ CIRCUITS : provides
+    CIRCUITS  ||--o{ KPI      : reports
+    CIRCUITS  ||--o{ TICKETS  : generates
+    SERVICE_COMMITS ||--o{ SERVICE_TYPES : defines
+    SERVICE_TYPES ||--o{ CIRCUITS : typed_as
+
+    BUILDINGS {
+      string building_id PK
+      string market
+      string state
+      string net_status   "ON_NET | NEAR_NET"
+      date   last_verified
+      float  lat
+      float  lon
+      float  fiber_distance_m
+    }
+
+    CARRIERS {
+      string carrier_id PK
+      string carrier_name
+      string hq_city
+      string hq_state
+      bool   active_flag
+    }
+
+    CIRCUITS {
+      string circuit_id PK
+      string building_id FK
+      string carrier_id  FK
+      string service_type
+      int    bandwidth_mbps
+      bool   is_active
+      date   install_date
+      float  mrc_usd
+    }
+
+    KPI {
+      date   date
+      string circuit_id FK
+      float  uptime_pct
+      float  latency_ms
+      float  jitter_ms
+      float  packet_loss_pct
+    }
+
+    TICKETS {
+      string ticket_id PK
+      string circuit_id FK
+      date   opened_date
+      date   closed_date
+      string status
+      string category
+      string priority
+      bool   sla_met_flag
+    }
+
+    SERVICE_TYPES {
+      string service_type PK
+    }
+
+    SERVICE_COMMITS {
+      string service_type FK
+      float  latency_commit_ms
+      float  jitter_commit_ms
+      float  packet_loss_commit_pct
+      float  credit_policy_usd_per_breach
+    }
 
 ## 🧱 Data Schema (5 Primary CSVs)
 
