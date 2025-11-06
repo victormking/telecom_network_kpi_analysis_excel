@@ -1,9 +1,5 @@
 # 📶 Telecom Network KPI & Data Quality (Excel Project)
 
-**ON_NET / NEAR_NET accuracy • 30-Day Performance • SLA Credit Exposure • Financial Impact**
-
-![Dashboard Preview](viz/exec_cover.png)
-
 ---
 
 ## 🧭 Overview
