@@ -185,3 +185,30 @@ The Excel file functions as a self-contained ETL pipeline: each phase has dedica
 
 💡 Each long sheet uses **Freeze Panes** (top 3 rows) and **named ranges** for stable refresh and chart linking.  
 ---
+
+## 🔍 Analytical Questions & KPIs  
+
+This project answers **15 business and operational questions** that mirror the scope of a Network Data Analyst II role.  
+Each question corresponds to a pivot, measure, or visualization inside the workbook.  
+
+| **#** | **Business Question** | **Worksheet / Output** |
+|:--:|:--|:--|
+| **Q01** | How many buildings require re-verification (> 365 days)? | `checks` |
+| **Q02** | What % of buildings are ON_NET vs NEAR_NET per market? | `pvt_coverage` |
+| **Q03** | What is the count of active circuits and MRC (USD) by carrier? | `pvt_services`, `viz_01_services_by_carrier.png` |
+| **Q04** | Which service types dominate ON_NET vs NEAR_NET markets? | `pvt_services` |
+| **Q05** | What are the average uptime %, latency (ms), jitter (ms), and loss (%) by carrier? | `pvt_kpi_perf_30d` |
+| **Q06** | Which carriers most frequently breach SLA commit thresholds? | `tbl_sla_facts_final` |
+| **Q07** | What are the bottom 10 circuits by average uptime (30 days)? | `viz_04_bottom10_uptime.png` |
+| **Q08** | What is the estimated monthly credit exposure ($) by carrier and market? | `pvt_credit`, `viz_05_credits_by_carrier_mrc_overlay.png` |
+| **Q09** | What is the MoM trend in total credits issued? | `viz_07_credit_trend_mom.png` |
+| **Q10** | What are the most common ticket categories and priorities? | `pvt_tts`, `viz_06_tickets_by_category.png` |
+| **Q11** | What is the average ticket resolution time (hours)? | `viz_02_avg_resolution_hours.png` |
+| **Q12** | How do ticket categories align with SLA breaches? | `pvt_tts` |
+| **Q13** | What is the total financial impact (YTD) of SLA credits? | `tbl_sla_facts_final` |
+| **Q14** | Which markets show the highest latency variance? | `pvt_kpi_perf_30d` |
+| **Q15** | Which carriers deliver the most stable performance overall? | `viz_03_uptime_vs_latency_by_carrier.png` |
+
+📘 *All Q01–Q15 detailed answers are documented in* [`/docs/business_insights.md`](docs/business_insights.md).
+
+---
