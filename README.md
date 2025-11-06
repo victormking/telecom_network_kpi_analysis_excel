@@ -262,4 +262,55 @@ Network uptime ≈ 99.8 %, revenue risk < 1 %, and data-driven workflow enables 
 💡 *Goal:* show how Excel can still power a scalable, auditable KPI workflow when modern BI migration isn’t feasible.  
 
 
+## 🗂️ Folder Structure  
 
+```plaintext
+telecom_network_kpi_analysis_excel/
+├── data/                        # 5 raw CSV inputs (buildings, circuits, carriers, kpis, tickets)
+│   ├── buildings.csv
+│   ├── circuits.csv
+│   ├── carriers.csv
+│   ├── ocularip_kpis.csv
+│   ├── tts_tickets.csv
+│   └── tbl_commits.csv          # SLA commit lookup (thresholds)
+│
+├── reports/                     # Main Excel workbook (21 sheets total)
+│   └── Segra_Telecom_KPI_Analysis_FINAL.xlsx
+│
+├── viz/                         # Exported dashboard charts (7)
+│   ├── viz_01_services_by_carrier.png
+│   ├── viz_02_avg_resolution_hours.png
+│   ├── viz_03_uptime_vs_latency_by_carrier.png
+│   ├── viz_04_bottom10_uptime.png
+│   ├── viz_05_credits_by_carrier_mrc_overlay.png
+│   ├── viz_06_tickets_by_category.png
+│   └── viz_07_credit_trend_mom.png
+│
+├── docs/                        # Supplementary documentation
+│   ├── business_insights.md     # Full insights & recommendations
+│   ├── schema.md                # Column dictionary & ERD reference
+│   └── methods.md               # Power Query workflow notes
+│
+├── outputs/                     # Optional CSV exports from pivot tables
+│   ├── tbl_sla_facts_final.csv
+│   ├── pvt_services.csv
+│   └── pvt_tickets.csv
+│
+├── LICENSE
+└── README.md
+---
+
+📊 Sample Output Preview
+market	carrier_name	uptime_pct	latency_ms	credit_usd	tickets	avg_resolution_hr
+Atlanta	Carrier A	99.61 %	43.2	6,420	118	5.4
+Dallas	Carrier C	99.78 %	46.5	5,880	96	5.1
+Denver	Carrier B	99.94 %	37.8	1,430	52	4.9
+Tampa Bay	Carrier D	99.81 %	41.6	2,320	74	5.0
+Raleigh	Carrier E	99.97 %	35.4	910	47	4.8
+
+💡 Insight: Credit exposure is concentrated in two markets—Atlanta and Dallas—driven by latency breaches on high-MRC circuits.
+Prioritizing root-cause remediation for these carriers can cut monthly credit risk by ≈ 0.3 % of revenue.
+
+
+© 2025 Victor King — Telecom Network KPI Analysis (Excel Project).
+Licensed under the MIT License
