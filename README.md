@@ -260,20 +260,5 @@ Network uptime ≈ 99.8 %, revenue risk < 1 %, and data-driven workflow enables 
 
 💡 *Goal:* show how Excel can still power a scalable, auditable KPI workflow when modern BI migration isn’t feasible.  
 
----
-
-## 🗂️ Folder Structure  
-
-```plaintext
-telecom_network_kpi_analysis_excel/
-├── data/                  # 5 input CSVs + SLA commit lookup
-├── reports/               # Excel workbook (21 worksheets)
-│   └── Segra_Telecom_KPI_Analysis_FINAL.xlsx
-├── viz/                   # Exported dashboard PNGs (7)
-├── docs/                  # Insights, schema, and supporting notes
-│   ├── business_insights.md
-│   └── schema.md
-├── README.md              # You are here
-└── LICENSE
 
 
