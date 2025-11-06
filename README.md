@@ -112,3 +112,41 @@ erDiagram
     float  packet_loss_commit_pct
     float  credit_policy_usd_per_breach
   }
+## 🎯 Project Objectives & Context  
+
+This project recreates the **daily analytics workflow** of a **Network Data Analyst II** at a telecom company such as Segra — a role responsible for validating network coverage data, tracking SLA performance, and quantifying financial exposure from SLA breaches.  
+
+### **Core Objectives**  
+1. **Data Accuracy:** Verify the ON_NET / NEAR_NET building list ( > 500 k records in production ) for duplicates, orphan keys, and outdated entries.  
+2. **Performance Monitoring:** Aggregate OcularIP-style metrics (*uptime %*, *latency ms*, *jitter ms*, *packet loss %*) to assess network stability by market and carrier.  
+3. **Financial Accountability:** Estimate monthly SLA credits using contract thresholds + MRC (USD) exposure, helping reduce carrier credit payouts.  
+4. **Operational Alignment:** Connect ticket categories with SLA breaches to pinpoint recurring root causes.  
+5. **Repeatable Workflow:** Build a refreshable, **Excel (Power Query + PivotTables)** pipeline that scales to large CSVs without migrating to SQL or Power BI.  
+
+### **Business Context**  
+Telecom operators like Segra manage enterprise and carrier clients through ON_NET / NEAR_NET fiber footprints.  
+Each SLA breach produces a **credit liability** and potential **customer churn risk**.  
+By monitoring these metrics and maintaining clean network data, analysts directly drive both **revenue growth** and **cost savings**.  
+
+> 🧮 **Protect revenue through SLA tracking** + 🌐 **Drive sales through clean ON_NET data**
+
+---
+
+## ⚙️ Methodology & Workflow (Phases 0 – 7)  
+
+The workflow mirrors a mini ETL pipeline inside Excel — from raw CSVs to insights and dashboards.  
+
+| **Phase #** | **Stage Name** | **Description / Key Actions** | **Output Sheet(s)** |
+|:--:|:--|:--|:--|
+| **0** | 🧾 Setup & Import | Load five CSVs (`buildings`, `circuits`, `carriers`, `ocularip_kpis`, `tts_tickets`) via Power Query and define data types / keys. | Raw tables |
+| **1** | 🔍 Data Quality Checks | Identify duplicates, orphan foreign keys, and stale verifications (`> 365 days`). | `checks` |
+| **2** | 🏗️ Coverage & Inventory | Summarize ON_NET vs NEAR_NET buildings; active circuits and MRC by carrier & service type. | `pvt_services`, `pvt_coverage` |
+| **3** | 📊 SLA Fact Build | Join KPIs + Circuits + Commits → compute `_fail` flags for latency, jitter, loss. | `tbl_sla` |
+| **4** | 💸 Credit Exposure | Apply credit policy (`credit_day = IF(any_fail, rate × mrc_usd, 0)`) and aggregate by carrier & market. | `tbl_sla_facts_final`, `pvt_credit` |
+| **5** | 🧰 Tickets & Root Cause | Calculate avg resolution hours & top categories; link tickets to SLA fails. | `pvt_tts` |
+| **6** | 📈 Visualization Build | Create 7 executive dashboards (coverage, services, KPI 30 d, credits, tickets, trends). | `viz_*` series |
+| **7** | 🧠 Insights & Recommendations | Summarize findings on data quality, performance, financial exposure, and operations. | `/docs/business_insights.md`, `/viz/` |
+
+**Pipeline Summary:**  
+`buildings + circuits + carriers + ocularip_kpis + tts_tickets → Power Query joins → credit calculation → pivot dashboards → executive insights`
+
