@@ -1,0 +1,5 @@
+carrier_id,carrier_name,sla_uptime_commit_pct,sla_latency_commit_ms,credit_tier1_threshold_pct,credit_tier1_pct,credit_tier2_threshold_pct,credit_tier2_pct,credit_tier3_threshold_pct,credit_tier3_pct
+1,CarrierOne,99.9,25,99.9,5,99.5,10,99.0,20
+2,MetroLink,99.95,20,99.95,5,99.7,10,99.2,20
+3,AlphaFiber,99.9,30,99.9,5,99.5,10,99.0,20
+4,UnionNet,99.99,15,99.99,5,99.9,10,99.5,20
